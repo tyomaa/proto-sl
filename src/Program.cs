@@ -6,7 +6,7 @@ namespace proto_sl
     {
         static void Main(string[] args)
         {
-            ProtoTest.Test();
+            DSTest.Test();
         }
     }
 }

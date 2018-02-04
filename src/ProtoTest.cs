@@ -13,7 +13,7 @@ public static class ProtoTest
         TestDeserialize();
     }
 
-    private static void TestDeserialize()
+    public static Data TestDeserialize()
     {
         using (var stream = new CodedInputStream(
             new FileStream(
@@ -22,7 +22,8 @@ public static class ProtoTest
                 FileAccess.Read)))
         {
             var data = Data.Parser.ParseFrom(stream);
-            Console.Write(data);
+            Console.WriteLine(data);
+            return data;
         }
     }
 
@@ -43,9 +44,9 @@ public static class ProtoTest
     {
         var player = new Player();
         player.Id = "2";
-        player.Level = 5;
         player.Name = "username";
         var data = new Data();
+        data.Level = 5;
         data.Player = player;
         return data;
     }

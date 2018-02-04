@@ -24,14 +24,14 @@ namespace Sl {
     static DataReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "CgpkYXRhLnByb3RvEgJzbCIiCgREYXRhEhoKBnBsYXllchgBIAEoCzIKLnNs",
-            "LlBsYXllciIxCgZQbGF5ZXISCgoCaWQYASABKAkSDAoEbmFtZRgCIAEoCRIN",
-            "CgVsZXZlbBgDIAEoBWIGcHJvdG8z"));
+            "CgpkYXRhLnByb3RvEgJzbCI/CgREYXRhEhoKBnBsYXllchgBIAEoCzIKLnNs",
+            "LlBsYXllchIMCgRnb2xkGAIgASgFEg0KBWxldmVsGAMgASgFIiIKBlBsYXll",
+            "chIKCgJpZBgBIAEoCRIMCgRuYW1lGAIgASgJYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Sl.Data), global::Sl.Data.Parser, new[]{ "Player" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Sl.Player), global::Sl.Player.Parser, new[]{ "Id", "Name", "Level" }, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Sl.Data), global::Sl.Data.Parser, new[]{ "Player", "Gold", "Level" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Sl.Player), global::Sl.Player.Parser, new[]{ "Id", "Name" }, null, null, null)
           }));
     }
     #endregion
@@ -64,6 +64,8 @@ namespace Sl {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public Data(Data other) : this() {
       Player = other.player_ != null ? other.Player.Clone() : null;
+      gold_ = other.gold_;
+      level_ = other.level_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -83,6 +85,28 @@ namespace Sl {
       }
     }
 
+    /// <summary>Field number for the "gold" field.</summary>
+    public const int GoldFieldNumber = 2;
+    private int gold_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int Gold {
+      get { return gold_; }
+      set {
+        gold_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "level" field.</summary>
+    public const int LevelFieldNumber = 3;
+    private int level_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int Level {
+      get { return level_; }
+      set {
+        level_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as Data);
@@ -97,6 +121,8 @@ namespace Sl {
         return true;
       }
       if (!object.Equals(Player, other.Player)) return false;
+      if (Gold != other.Gold) return false;
+      if (Level != other.Level) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -104,6 +130,8 @@ namespace Sl {
     public override int GetHashCode() {
       int hash = 1;
       if (player_ != null) hash ^= Player.GetHashCode();
+      if (Gold != 0) hash ^= Gold.GetHashCode();
+      if (Level != 0) hash ^= Level.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -121,6 +149,14 @@ namespace Sl {
         output.WriteRawTag(10);
         output.WriteMessage(Player);
       }
+      if (Gold != 0) {
+        output.WriteRawTag(16);
+        output.WriteInt32(Gold);
+      }
+      if (Level != 0) {
+        output.WriteRawTag(24);
+        output.WriteInt32(Level);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -131,6 +167,12 @@ namespace Sl {
       int size = 0;
       if (player_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(Player);
+      }
+      if (Gold != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Gold);
+      }
+      if (Level != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Level);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -149,6 +191,12 @@ namespace Sl {
         }
         Player.MergeFrom(other.Player);
       }
+      if (other.Gold != 0) {
+        Gold = other.Gold;
+      }
+      if (other.Level != 0) {
+        Level = other.Level;
+      }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
@@ -165,6 +213,14 @@ namespace Sl {
               player_ = new global::Sl.Player();
             }
             input.ReadMessage(player_);
+            break;
+          }
+          case 16: {
+            Gold = input.ReadInt32();
+            break;
+          }
+          case 24: {
+            Level = input.ReadInt32();
             break;
           }
         }
@@ -200,7 +256,6 @@ namespace Sl {
     public Player(Player other) : this() {
       id_ = other.id_;
       name_ = other.name_;
-      level_ = other.level_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -231,17 +286,6 @@ namespace Sl {
       }
     }
 
-    /// <summary>Field number for the "level" field.</summary>
-    public const int LevelFieldNumber = 3;
-    private int level_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int Level {
-      get { return level_; }
-      set {
-        level_ = value;
-      }
-    }
-
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as Player);
@@ -257,7 +301,6 @@ namespace Sl {
       }
       if (Id != other.Id) return false;
       if (Name != other.Name) return false;
-      if (Level != other.Level) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -266,7 +309,6 @@ namespace Sl {
       int hash = 1;
       if (Id.Length != 0) hash ^= Id.GetHashCode();
       if (Name.Length != 0) hash ^= Name.GetHashCode();
-      if (Level != 0) hash ^= Level.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -288,10 +330,6 @@ namespace Sl {
         output.WriteRawTag(18);
         output.WriteString(Name);
       }
-      if (Level != 0) {
-        output.WriteRawTag(24);
-        output.WriteInt32(Level);
-      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -305,9 +343,6 @@ namespace Sl {
       }
       if (Name.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(Name);
-      }
-      if (Level != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Level);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -326,9 +361,6 @@ namespace Sl {
       if (other.Name.Length != 0) {
         Name = other.Name;
       }
-      if (other.Level != 0) {
-        Level = other.Level;
-      }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
@@ -346,10 +378,6 @@ namespace Sl {
           }
           case 18: {
             Name = input.ReadString();
-            break;
-          }
-          case 24: {
-            Level = input.ReadInt32();
             break;
           }
         }

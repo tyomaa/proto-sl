@@ -3,11 +3,12 @@ package sl;
 
 message Data {
 	Player player = 1;
+	int32 gold = 2;
+	int32 level = 3;
 }
 
 message Player {
 	string id = 1;
 	string name = 2;
-	int32 level = 3;
 }
 
