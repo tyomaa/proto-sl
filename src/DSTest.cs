@@ -3,7 +3,7 @@ using System.Diagnostics;
 
 public class DSTest
 {
-    public static void Test()
+    public static void TestPerformance()
     {
         var dataStorage = new DataStorage();
         var data = ProtoTest.TestDeserialize();
@@ -24,9 +24,15 @@ public class DSTest
         }
         s.Stop();
         Console.WriteLine("default set = " + s.Elapsed);
-        
-        // Console.WriteLine(data);
-        // var player = dataStorage.Data.Player.Get();
-        // Console.WriteLine(player);
+    }
+
+    public static void Test()
+    {
+        var dataStorage = new DataStorage();
+        var data = ProtoTest.TestDeserialize();
+        dataStorage.Init(data);
+        Console.WriteLine(data);
+        var player = dataStorage.Data.Player.Get();
+        Console.WriteLine(player);
     }
 }

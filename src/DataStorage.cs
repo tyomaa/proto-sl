@@ -20,19 +20,20 @@ public class DataStorage
 
 //================================
 
-public class DataWrapper : DefaultValueWrapper<Data>
+public class DataWrapper : DSValueWrapper<Data>
 {
     public PlayerWrapper Player { get { return new PlayerWrapper(data_, "player_", this); } }
-    public DefaultValueWrapper<int> Gold { get { return new DefaultValueWrapper<int>(data_, "gold_", this); } }
+    public DSValueWrapper<int> Gold { get { return new DSValueWrapper<int>(data_, "gold_", this); } }
+    public MapValueWrapper<string, int> { get { return new MapValueWrapper<string, int>(data_, "resources_", this); } }
 
     public DataWrapper(Data data, string name, IDSValueWrapper parent)
         : base(data, name, parent) { }
 }
 
-public class PlayerWrapper : DefaultValueWrapper<Player>
+public class PlayerWrapper : DSValueWrapper<Player>
 {
-    public DefaultValueWrapper<string> Id { get { return new DefaultValueWrapper<string>(data_, "id_", this); } }
-    public DefaultValueWrapper<string> Name { get { return new DefaultValueWrapper<string>(data_, "name_", this); } }
+    public DSValueWrapper<string> Id { get { return new DSValueWrapper<string>(data_, "id_", this); } }
+    public DSValueWrapper<string> Name { get { return new DSValueWrapper<string>(data_, "name_", this); } }
 
     public PlayerWrapper(Data data, string name, IDSValueWrapper parent)
         : base(data, name, parent) { }
@@ -75,9 +76,19 @@ public abstract class BaseValueWrapper : IDSValueWrapper
     }
 }
 
-public class DefaultValueWrapper<T> : BaseValueWrapper
+public class MapValueWrapper<TKey, TValue> : DSValueWrapper<global::Google.Protobuf.Collections.MapField<TKey, TValue>>
 {
-    public DefaultValueWrapper(Data data, string name, IDSValueWrapper parent)
+    public MapValueWrapper(Data data, string name, IDSValueWrapper parent) 
+        : base(data, name, parent) { }
+
+    // public TValue Get(TKey key)
+    // {
+    // }
+}
+
+public class DSValueWrapper<T> : BaseValueWrapper
+{
+    public DSValueWrapper(Data data, string name, IDSValueWrapper parent)
         : base(data, name, parent) { }
 
     public void Set(T value)

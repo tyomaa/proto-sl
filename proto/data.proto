@@ -3,12 +3,16 @@ package sl;
 
 message Data {
 	Player player = 1;
-	int32 gold = 2;
+	map<string, int32> resources = 2;
 	int32 level = 3;
+	repeated Offer offers = 4;
+}
+
+message Offer {
+	int32 price = 1;
 }
 
 message Player {
 	string id = 1;
 	string name = 2;
 }
-

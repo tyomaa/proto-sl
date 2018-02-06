@@ -24,13 +24,17 @@ namespace Sl {
     static DataReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "CgpkYXRhLnByb3RvEgJzbCI/CgREYXRhEhoKBnBsYXllchgBIAEoCzIKLnNs",
-            "LlBsYXllchIMCgRnb2xkGAIgASgFEg0KBWxldmVsGAMgASgFIiIKBlBsYXll",
-            "chIKCgJpZBgBIAEoCRIMCgRuYW1lGAIgASgJYgZwcm90bzM="));
+            "CgpkYXRhLnByb3RvEgJzbCKqAQoERGF0YRIaCgZwbGF5ZXIYASABKAsyCi5z",
+            "bC5QbGF5ZXISKgoJcmVzb3VyY2VzGAIgAygLMhcuc2wuRGF0YS5SZXNvdXJj",
+            "ZXNFbnRyeRINCgVsZXZlbBgDIAEoBRIZCgZvZmZlcnMYBCADKAsyCS5zbC5P",
+            "ZmZlchowCg5SZXNvdXJjZXNFbnRyeRILCgNrZXkYASABKAkSDQoFdmFsdWUY",
+            "AiABKAU6AjgBIhYKBU9mZmVyEg0KBXByaWNlGAEgASgFIiIKBlBsYXllchIK",
+            "CgJpZBgBIAEoCRIMCgRuYW1lGAIgASgJYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Sl.Data), global::Sl.Data.Parser, new[]{ "Player", "Gold", "Level" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Sl.Data), global::Sl.Data.Parser, new[]{ "Player", "Resources", "Level", "Offers" }, null, null, new pbr::GeneratedClrTypeInfo[] { null, }),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Sl.Offer), global::Sl.Offer.Parser, new[]{ "Price" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Sl.Player), global::Sl.Player.Parser, new[]{ "Id", "Name" }, null, null, null)
           }));
     }
@@ -64,8 +68,9 @@ namespace Sl {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public Data(Data other) : this() {
       Player = other.player_ != null ? other.Player.Clone() : null;
-      gold_ = other.gold_;
+      resources_ = other.resources_.Clone();
       level_ = other.level_;
+      offers_ = other.offers_.Clone();
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -85,15 +90,14 @@ namespace Sl {
       }
     }
 
-    /// <summary>Field number for the "gold" field.</summary>
-    public const int GoldFieldNumber = 2;
-    private int gold_;
+    /// <summary>Field number for the "resources" field.</summary>
+    public const int ResourcesFieldNumber = 2;
+    private static readonly pbc::MapField<string, int>.Codec _map_resources_codec
+        = new pbc::MapField<string, int>.Codec(pb::FieldCodec.ForString(10), pb::FieldCodec.ForInt32(16), 18);
+    private readonly pbc::MapField<string, int> resources_ = new pbc::MapField<string, int>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int Gold {
-      get { return gold_; }
-      set {
-        gold_ = value;
-      }
+    public pbc::MapField<string, int> Resources {
+      get { return resources_; }
     }
 
     /// <summary>Field number for the "level" field.</summary>
@@ -105,6 +109,16 @@ namespace Sl {
       set {
         level_ = value;
       }
+    }
+
+    /// <summary>Field number for the "offers" field.</summary>
+    public const int OffersFieldNumber = 4;
+    private static readonly pb::FieldCodec<global::Sl.Offer> _repeated_offers_codec
+        = pb::FieldCodec.ForMessage(34, global::Sl.Offer.Parser);
+    private readonly pbc::RepeatedField<global::Sl.Offer> offers_ = new pbc::RepeatedField<global::Sl.Offer>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<global::Sl.Offer> Offers {
+      get { return offers_; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -121,8 +135,9 @@ namespace Sl {
         return true;
       }
       if (!object.Equals(Player, other.Player)) return false;
-      if (Gold != other.Gold) return false;
+      if (!Resources.Equals(other.Resources)) return false;
       if (Level != other.Level) return false;
+      if(!offers_.Equals(other.offers_)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -130,8 +145,9 @@ namespace Sl {
     public override int GetHashCode() {
       int hash = 1;
       if (player_ != null) hash ^= Player.GetHashCode();
-      if (Gold != 0) hash ^= Gold.GetHashCode();
+      hash ^= Resources.GetHashCode();
       if (Level != 0) hash ^= Level.GetHashCode();
+      hash ^= offers_.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -149,14 +165,12 @@ namespace Sl {
         output.WriteRawTag(10);
         output.WriteMessage(Player);
       }
-      if (Gold != 0) {
-        output.WriteRawTag(16);
-        output.WriteInt32(Gold);
-      }
+      resources_.WriteTo(output, _map_resources_codec);
       if (Level != 0) {
         output.WriteRawTag(24);
         output.WriteInt32(Level);
       }
+      offers_.WriteTo(output, _repeated_offers_codec);
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -168,12 +182,11 @@ namespace Sl {
       if (player_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(Player);
       }
-      if (Gold != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Gold);
-      }
+      size += resources_.CalculateSize(_map_resources_codec);
       if (Level != 0) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(Level);
       }
+      size += offers_.CalculateSize(_repeated_offers_codec);
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
       }
@@ -191,12 +204,11 @@ namespace Sl {
         }
         Player.MergeFrom(other.Player);
       }
-      if (other.Gold != 0) {
-        Gold = other.Gold;
-      }
+      resources_.Add(other.resources_);
       if (other.Level != 0) {
         Level = other.Level;
       }
+      offers_.Add(other.offers_);
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
@@ -215,12 +227,145 @@ namespace Sl {
             input.ReadMessage(player_);
             break;
           }
-          case 16: {
-            Gold = input.ReadInt32();
+          case 18: {
+            resources_.AddEntriesFrom(input, _map_resources_codec);
             break;
           }
           case 24: {
             Level = input.ReadInt32();
+            break;
+          }
+          case 34: {
+            offers_.AddEntriesFrom(input, _repeated_offers_codec);
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class Offer : pb::IMessage<Offer> {
+    private static readonly pb::MessageParser<Offer> _parser = new pb::MessageParser<Offer>(() => new Offer());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<Offer> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Sl.DataReflection.Descriptor.MessageTypes[1]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public Offer() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public Offer(Offer other) : this() {
+      price_ = other.price_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public Offer Clone() {
+      return new Offer(this);
+    }
+
+    /// <summary>Field number for the "price" field.</summary>
+    public const int PriceFieldNumber = 1;
+    private int price_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int Price {
+      get { return price_; }
+      set {
+        price_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as Offer);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(Offer other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Price != other.Price) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Price != 0) hash ^= Price.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (Price != 0) {
+        output.WriteRawTag(8);
+        output.WriteInt32(Price);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (Price != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Price);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(Offer other) {
+      if (other == null) {
+        return;
+      }
+      if (other.Price != 0) {
+        Price = other.Price;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 8: {
+            Price = input.ReadInt32();
             break;
           }
         }
@@ -237,7 +382,7 @@ namespace Sl {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Sl.DataReflection.Descriptor.MessageTypes[1]; }
+      get { return global::Sl.DataReflection.Descriptor.MessageTypes[2]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
