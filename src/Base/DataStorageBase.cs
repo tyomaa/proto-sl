@@ -1,6 +1,7 @@
 using Sl;
 
-public class DataStorageBase<TData, TDataWrapper> where TDataWrapper : DSValueWrapper<TData, TData>
+public class DataStorageBase<TData, TDataWrapper> 
+    where TDataWrapper : DSValueWrapper<TData, TData>
 {
     private TData _data;
 

@@ -28,11 +28,11 @@ public class DSTest
 
     public static void Test()
     {
-        var dataStorage = new DataStorage();
-        var data = ProtoTest.TestDeserialize();
-        dataStorage.Init(data, new DataWrapper(data, "data_", null));
+        DataStorage ds = new DataStorage();
+        Sl.Data data = ProtoTest.TestDeserialize();
+        ds.Init(data, new DataWrapper(data, "data_", null));
         Console.WriteLine(data);
-        var player = dataStorage.Data.Player.Get();
+        Sl.Player player = ds.Data.Player.Get();
         Console.WriteLine(player);
     }
 }
