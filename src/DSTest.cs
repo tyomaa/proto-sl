@@ -7,7 +7,7 @@ public class DSTest
     {
         var dataStorage = new DataStorage();
         var data = ProtoTest.TestDeserialize();
-        dataStorage.Init(data);
+        dataStorage.Init(data, new DataWrapper(data, "data_", null));
         Stopwatch s = new Stopwatch();
         s.Start();
         for (int i = 0; i < 100000; ++i)
@@ -30,7 +30,7 @@ public class DSTest
     {
         var dataStorage = new DataStorage();
         var data = ProtoTest.TestDeserialize();
-        dataStorage.Init(data);
+        dataStorage.Init(data, new DataWrapper(data, "data_", null));
         Console.WriteLine(data);
         var player = dataStorage.Data.Player.Get();
         Console.WriteLine(player);
